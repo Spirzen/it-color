@@ -1,0 +1,171 @@
+---
+import PortalLayout from '@/components/PortalLayout.astro';
+import {getPortalContext} from '@/lib/portal.mjs';
+import {namedColorCount} from '@/data/html-colors.mjs';
+
+const {navItems, brandHref, brandLabel, ecosystemConfigJson} = getPortalContext();
+---
+
+<PortalLayout
+  title="Цвета — студия, конвертер, HTML-палитра | IT Universe"
+  description="Работа с цветами: HEX, RGB, HSL, имена CSS/HTML, копирование, контраст, гармонии и живой предпросмотр на элементе."
+  brandLabel={brandLabel}
+  brandHref={brandHref}
+  navItems={navItems}
+  wide={true}
+  ecosystemConfigJson={ecosystemConfigJson}
+>
+  <section class="color-hero">
+    <div class="color-hero__inner">
+      <h1>Студия цвета</h1>
+      <p>
+        Подбирайте, конвертируйте и копируйте цвета — HEX, RGB, HSL и CSS-имена. Смотрите контраст,
+        гармонии и сразу применяйте оттенок к HTML-элементам на странице.
+      </p>
+    </div>
+  </section>
+
+  <nav class="color-nav-tabs" aria-label="Разделы">
+    <a href="/" class="is-active" aria-current="page">Студия</a>
+    <a href="/html-colors">HTML-цвета</a>
+  </nav>
+
+  <div class="color-grid color-grid--studio">
+    <aside class="color-panel">
+      <div class="color-panel__head">
+        <h2>Образец</h2>
+        <button type="button" class="btn btn--ghost" id="btn-random">Случайный</button>
+      </div>
+      <div class="color-panel__body">
+        <div class="swatch-main" id="swatch-main" role="img" aria-label="Текущий цвет">
+          <span class="swatch-main__ring" aria-hidden="true"></span>
+        </div>
+        <p style="margin:0.65rem 0 0;font-family:var(--itu-font-mono);font-weight:700;text-align:center" id="swatch-hex-label">#6366F1</p>
+        <div class="swatch-actions">
+          <label class="btn btn--primary" for="input-color">Выбрать</label>
+          <input type="color" id="input-color" value="#6366F1" class="sr-only" />
+          <button type="button" class="btn" id="btn-eyedropper">Пипетка</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="color-grid" style="gap:1rem">
+      <section class="color-panel">
+        <div class="color-panel__head"><h2>Конвертер</h2></div>
+        <div class="color-panel__body field-grid">
+          <div class="field">
+            <label for="input-hex">HEX</label>
+            <div class="field-row">
+              <input type="text" id="input-hex" value="#6366F1" spellcheck="false" autocomplete="off" />
+            </div>
+          </div>
+          <div class="field">
+            <label>RGB</label>
+            <div class="slider-row">
+              <input type="number" id="input-r" min="0" max="255" aria-label="Red" />
+              <input type="range" id="range-r" min="0" max="255" aria-label="Red slider" />
+              <span>R</span>
+            </div>
+            <div class="slider-row">
+              <input type="number" id="input-g" min="0" max="255" aria-label="Green" />
+              <input type="range" id="range-g" min="0" max="255" aria-label="Green slider" />
+              <span>G</span>
+            </div>
+            <div class="slider-row">
+              <input type="number" id="input-b" min="0" max="255" aria-label="Blue" />
+              <input type="range" id="range-b" min="0" max="255" aria-label="Blue slider" />
+              <span>B</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>HSL</label>
+            <div class="slider-row">
+              <input type="number" id="input-h" min="0" max="360" aria-label="Hue" />
+              <input type="range" id="range-h" min="0" max="360" aria-label="Hue slider" />
+              <span>H</span>
+            </div>
+            <div class="slider-row">
+              <input type="number" id="input-s" min="0" max="100" aria-label="Saturation" />
+              <input type="range" id="range-s" min="0" max="100" aria-label="Saturation slider" />
+              <span>S</span>
+            </div>
+            <div class="slider-row">
+              <input type="number" id="input-l" min="0" max="100" aria-label="Lightness" />
+              <input type="range" id="range-l" min="0" max="100" aria-label="Lightness slider" />
+              <span>L</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="color-panel">
+        <div class="color-panel__head"><h2>Копировать одним кликом</h2></div>
+        <div class="color-panel__body field-grid">
+          <button type="button" class="copy-chip" id="chip-hex"><span class="copy-chip__label">HEX</span><span class="copy-chip__value">#6366F1</span></button>
+          <button type="button" class="copy-chip" id="chip-rgb"><span class="copy-chip__label">RGB</span><span class="copy-chip__value">rgb(99, 102, 241)</span></button>
+          <button type="button" class="copy-chip" id="chip-hsl"><span class="copy-chip__label">HSL</span><span class="copy-chip__value">hsl(239, 84%, 67%)</span></button>
+          <button type="button" class="copy-chip" id="chip-name"><span class="copy-chip__label">CSS-имя</span><span class="copy-chip__value">—</span></button>
+          <button type="button" class="copy-chip" id="chip-css"><span class="copy-chip__label">Для CSS</span><span class="copy-chip__value">#6366F1</span></button>
+        </div>
+      </section>
+
+      <section class="color-panel">
+        <div class="color-panel__head"><h2>Контраст (WCAG)</h2></div>
+        <div class="color-panel__body contrast-grid">
+          <div class="contrast-card">
+            <div class="contrast-card__sample" id="contrast-white-sample">Aa</div>
+            <div class="contrast-card__meta" id="contrast-white-meta">на белом</div>
+          </div>
+          <div class="contrast-card">
+            <div class="contrast-card__sample" id="contrast-black-sample">Aa</div>
+            <div class="contrast-card__meta" id="contrast-black-meta">на чёрном</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="color-panel">
+        <div class="color-panel__head"><h2>Гармонии</h2></div>
+        <div class="color-panel__body">
+          <div class="harmony-row" id="harmony-row"></div>
+        </div>
+      </section>
+
+      <section class="color-panel playground">
+        <div class="color-panel__head"><h2>Живой HTML-предпросмотр</h2></div>
+        <div class="color-panel__body">
+          <div class="playground-preview">
+            <div class="playground-preview__bar"></div>
+            <div class="playground-card" id="playground-card">
+              <span class="playground-badge" id="playground-badge">Badge</span>
+              <h3>Пример карточки</h3>
+              <p>Выберите, к чему применить текущий цвет, и нажмите «Применить». Так видно, как оттенок работает в интерфейсе.</p>
+              <div class="playground-actions">
+                <button type="button" class="playground-btn" id="playground-btn">Кнопка</button>
+                <a href="#" class="playground-link" id="playground-link" onclick="return false">Ссылка</a>
+              </div>
+            </div>
+          </div>
+          <div class="playground-controls" style="margin-top:0.85rem">
+            <label><input type="radio" name="pg-target" value="background" checked /> Фон карточки</label>
+            <label><input type="radio" name="pg-target" value="text" /> Цвет текста</label>
+            <label><input type="radio" name="pg-target" value="accent" /> Кнопка и ссылка</label>
+            <label><input type="radio" name="pg-target" value="border" /> Рамка карточки</label>
+          </div>
+          <div class="swatch-actions" style="margin-top:0.75rem">
+            <button type="button" class="btn btn--primary" id="btn-apply-playground">Применить</button>
+            <button type="button" class="btn" id="btn-reset-playground">Сбросить</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <p class="color-footer-note">
+    Имена HTML/CSS не чувствительны к регистру: <code>gray</code> и <code>Grey</code> — одно и то же.
+    Полный справочник из {namedColorCount} ключевых слов — на странице <a href="/html-colors">HTML-цвета</a>.
+  </p>
+</PortalLayout>
+
+<script>
+  import '@/scripts/color-studio.js';
+</script>

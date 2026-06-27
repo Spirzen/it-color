@@ -1,0 +1,104 @@
+---
+import PortalLayout from '@/components/PortalLayout.astro';
+import {getPortalContext} from '@/lib/portal.mjs';
+import {colorGroups, namedColorCount} from '@/data/html-colors.mjs';
+
+const {navItems, brandHref, brandLabel, ecosystemConfigJson} = getPortalContext();
+
+const groupAccents = {
+  red: '#ef4444',
+  pink: '#ec4899',
+  orange: '#f97316',
+  yellow: '#eab308',
+  purple: '#a855f7',
+  brown: '#a16207',
+  green: '#22c55e',
+  blue: '#3b82f6',
+  white: '#e2e8f0',
+  gray: '#64748b',
+  basic: '#6366f1',
+};
+---
+
+<PortalLayout
+  title="HTML-цвета — таблица имён CSS | IT Universe"
+  description="147 ключевых слов цветов для HTML и CSS: имя, HEX, RGB. Поиск, копирование и переход в студию."
+  brandLabel={brandLabel}
+  brandHref={brandHref}
+  navItems={navItems}
+  wide={true}
+  ecosystemConfigJson={ecosystemConfigJson}
+>
+  <section class="color-hero">
+    <div class="color-hero__inner">
+      <h1>HTML-цвета</h1>
+      <p>
+        Ключевые слова W3C для CSS и HTML — от 16 классических до 147 имён в современных спецификациях.
+        Клик по образцу открывает цвет в студии; правый клик по карточке копирует HEX.
+      </p>
+    </div>
+  </section>
+
+  <nav class="color-nav-tabs" aria-label="Разделы">
+    <a href="/">Студия</a>
+    <a href="/html-colors" class="is-active" aria-current="page">HTML-цвета</a>
+  </nav>
+
+  <div class="catalog-toolbar">
+    <div class="field">
+      <label for="catalog-search">Поиск по имени, HEX или RGB</label>
+      <input type="search" id="catalog-search" placeholder="Например: DodgerBlue, #1E90FF, rgb(30, 144, 255)" autocomplete="off" />
+    </div>
+    <div>
+      <p class="catalog-stats" id="catalog-results-count">{namedColorCount} имён</p>
+      <div class="swatch-actions">
+        <button type="button" class="btn btn--primary is-active" id="view-grid">Сетка</button>
+        <button type="button" class="btn" id="view-table">Таблица</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="catalog-grid-view">
+    {
+      colorGroups.map((group) => (
+        <section class="color-group" data-group-id={group.id} style={`--group-accent: ${groupAccents[group.id] ?? '#6366f1'}`}>
+          <h2>{group.label}</h2>
+          <div class="color-cards" data-group-grid />
+        </section>
+      ))
+    }
+  </div>
+
+  <div id="catalog-table-view" class="is-hidden">
+    {
+      colorGroups.map((group) => (
+        <section class="color-group" data-table-group-id={group.id} style={`--group-accent: ${groupAccents[group.id] ?? '#6366f1'}`}>
+          <h2>{group.label}</h2>
+          <div class="color-table-wrap">
+            <table class="color-table">
+              <thead>
+                <tr>
+                  <th scope="col">Образец</th>
+                  <th scope="col">Имя</th>
+                  <th scope="col">HEX</th>
+                  <th scope="col">RGB</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody data-group-table />
+            </table>
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  <p class="color-footer-note">
+    Не все 147 имён уникальны: например, <code>Magenta</code> и <code>Fuchsia</code> — один цвет
+    <code>#FF00FF</code>, а <code>Gray</code> и <code>Grey</code> — <code>#808080</code>.
+  </p>
+</PortalLayout>
+
+<script>
+  import '@/scripts/html-colors-catalog.js';
+</script>

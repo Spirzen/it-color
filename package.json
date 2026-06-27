@@ -1,0 +1,17 @@
+{
+  "name": "it-color",
+  "version": "0.1.0",
+  "type": "module",
+  "homepage": "https://color.spirzen.ru",
+  "scripts": {
+    "dev": "astro dev --port 4336",
+    "build": "astro build",
+    "preview": "astro preview --port 4336"
+  },
+  "dependencies": {
+    "astro": "^5.10.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
