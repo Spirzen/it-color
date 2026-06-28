@@ -25,13 +25,11 @@
 }
 
 .ecosystem-nav__brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 1.75rem;
   height: 1.75rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .ecosystem-nav__links {

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://color.spirzen.ru/sitemap-index.xml
